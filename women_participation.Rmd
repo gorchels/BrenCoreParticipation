@@ -1,0 +1,50 @@
+---
+title: "women_participation"
+author: "Madeline Gorchels"
+date: "11/9/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+```{r, include=FALSE}
+#reading in packages and data 
+library(tidyverse)
+library(effsize)
+library(kableExtra)
+
+w_p = read_csv("women_participation.csv")
+
+#View(w_p) calling the data frame 
+```
+
+```{r}
+#Data Exploration
+w_df = w_p %>% 
+  filter(student_g_p == "w")
+#View(w_df)
+m_df = w_p %>% 
+  filter(student_g_p == "m")
+#View(m_df)
+
+#Calculating general propotions in man presenting and woman presenting students
+
+prop_w = count(w_df)/(count(w_df)+count(m_df))
+#prop_w
+prop_m = count(m_df)/(count(w_df)+count(m_df))
+#prop_m
+prop_m
+
+```
+
+```{r}
+sum_df = w_p %>% 
+  group_by(student_g_p)
+  #summarise(
+    #count_time = count(time) 
+    #count_answer = count(q_or_a)
+  
+```
+
