@@ -17,7 +17,7 @@ library(kableExtra)
 
 w_p = read_csv("women_participation.csv")
 
-#View(w_p) calling the data frame 
+#View(w_p) #calling the data frame 
 ```
 
 ```{r}
@@ -30,7 +30,7 @@ m_df = w_p %>%
 #View(m_df)
 
 #Calculating general propotions in man presenting and woman presenting students
-
+#male proportion of the cohort is 0.3108
 prop_w = count(w_df)/(count(w_df)+count(m_df))
 #prop_w
 prop_m = count(m_df)/(count(w_df)+count(m_df))
