@@ -15,7 +15,7 @@ library(tidyverse)
 library(effsize)
 library(kableExtra)
 
-w_p = read_csv("women_participation.csv")
+w_p = read_csv("women_participation_git_fix.csv")
 
 #View(w_p) #calling the data frame 
 ```
