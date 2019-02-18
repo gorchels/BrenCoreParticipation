@@ -97,6 +97,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -104,14 +107,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -128,34 +191,33 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>#reading in packages and data 
-library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-✔ tibble  1.4.2     ✔ dplyr   0.7.6
-✔ tidyr   0.8.1     ✔ stringr 1.3.1
-✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(effsize)
-library(kableExtra)
+<pre class="r"><code>#Data Exploration
+w_df = w_p %&gt;% 
+  filter(student_g_p == &quot;w&quot;)
+#View(w_df)
+m_df = w_p %&gt;% 
+  filter(student_g_p == &quot;m&quot;)
+#View(m_df)
 
-w_p = read_csv(&quot;women_participation.csv&quot;)</code></pre>
-<pre><code>Parsed with column specification:
-cols(
-  date = col_character(),
-  class = col_integer(),
-  professor = col_character(),
-  prof_g_p = col_character(),
-  q_or_a = col_character(),
-  student_g_p = col_character(),
-  time = col_integer(),
-  cont_call = col_integer(),
-  number_m_p = col_integer(),
-  number_w_p = col_integer()
-)</code></pre>
-<pre class="r"><code>#View(w_p) calling the data frame </code></pre>
+#Calculating general propotions in man presenting and woman presenting students
+#male proportion of the cohort is 0.3108
+prop_w = count(w_df)/(count(w_df)+count(m_df))
+#prop_w
+prop_m = count(m_df)/(count(w_df)+count(m_df))
+#prop_m
+prop_m</code></pre>
+<pre><code>          n
+1 0.4782609</code></pre>
+<pre class="r"><code>sum_df = w_p %&gt;% 
+  group_by(student_g_p)
+  #summarise(
+    #count_time = count(time) 
+    #count_answer = count(q_or_a)</code></pre>
+<pre class="r"><code># time series graph of counts of participation by date
+
+
+p_by_date &lt;- w_p %&gt;% 
+  mutate(date = mdy(date))</code></pre>
 
 
 

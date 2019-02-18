@@ -9,11 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ```
 
+Here is a good resource I found for adding widgets to a Shiny app and using them: https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
+
+
 ```{r, include=FALSE}
 #reading in packages and data 
 library(tidyverse)
 library(effsize)
 library(kableExtra)
+library(lubridate)
 
 w_p = read_csv("women_participation_git_fix.csv")
 
@@ -45,6 +49,21 @@ sum_df = w_p %>%
   #summarise(
     #count_time = count(time) 
     #count_answer = count(q_or_a)
+  
+```
+
+```{r}
+# exploratory time series graph of counts of participation by date
+
+
+p_by_date <- w_p %>% 
+  mutate(date = mdy(date)) %>% 
+  select(date, student_g_p, class)
+
+ggplot(p_by_date, aes(x = date)) +
+  geom_bar(aes(fill = student_g_p)) +
+  facet_wrap(~class)
+  
   
 ```
 
