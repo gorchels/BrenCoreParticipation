@@ -67,3 +67,19 @@ ggplot(p_by_date, aes(x = date)) +
   
 ```
 
+
+###Contested Call
+
+```{r}
+con_df = w_p %>% 
+  filter(cont_call == 1)
+
+con_by_date <- con_df %>% 
+  mutate(date = mdy(date)) %>% 
+  select(date, student_g_p, class)
+
+ggplot(con_by_date, aes(x = date)) +
+  geom_bar(aes(fill = student_g_p)) +
+  facet_wrap(~class)
+```
+
