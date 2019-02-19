@@ -10,7 +10,8 @@
 library(shiny)
 library(tidyverse)
 
-participation <- read_csv("data/women_participation_git_fix.csv")  
+participation <- read_csv("data/women_participation_git_fix.csv") 
+
 
 # Define UI for application
 ui <- fluidPage(
@@ -65,7 +66,8 @@ server <- function(input, output) {
       
       
       ggplot(participation, aes(x = date))+
-        geom_bar(aes(fill = student_g_p))
+        geom_bar(aes(fill = student_g_p)) +
+        facet_wrap(~class)
     }
   )
   
