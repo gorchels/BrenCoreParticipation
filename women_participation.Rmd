@@ -83,3 +83,12 @@ ggplot(con_by_date, aes(x = date)) +
   facet_wrap(~class)
 ```
 
+```{r}
+library(vcd)
+mosaic(HairEyeColor, shade=TRUE, legend=TRUE) #Trying to do some visualization like this 
+```
+
+```{r}
+mosaic(con_df, shade=TRUE, legend=TRUE)
+```
+
