@@ -89,6 +89,12 @@ mosaic(HairEyeColor, shade=TRUE, legend=TRUE) #Trying to do some visualization l
 ```
 
 ```{r}
-mosaic(con_df, shade=TRUE, legend=TRUE)
+
+con_tally = con_df %>% 
+  select(prof_g_p, q_or_a, student_g_p) %>% 
+  group_by(prof_g_p, q_or_a, student_g_p) %>% 
+  tally()
+
+mosaic(con_tally, shade=TRUE, legend=TRUE)
 ```
 
