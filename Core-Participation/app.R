@@ -9,6 +9,7 @@
 
 library(shiny)
 library(tidyverse)
+library(lubridate)
 
 participation <- read_csv("data/women_participation_git_fix.csv") 
 
@@ -37,10 +38,10 @@ ui <- fluidPage(
                                          min = "2018-10-02",
                                          max = "2018-12-06"
                                          ),
-                          radioButtons("Gender", 
+                          checkboxGroupInput("Gender", 
                                        label = "Select Student Gender Preference",
-                                       choices = list("Male" = 1, "Female" = 2, "Both" = 3),
-                                       selected = 0
+                                       choices = list("Male" = "m", "Female" = "w"),
+                                       selected = "m"
                                        )
                         ),
                         #main panel
@@ -60,12 +61,16 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
+  datareact_time <- reactive({
+    participation %>% 
+      mutate(date = mdy(date)) %>% 
+      filter(student_g_p == input$Gender)
+  })
+  
   # time series panel
   output$time_plot <- renderPlot(
     {
-      
-      
-      ggplot(participation, aes(x = date))+
+        ggplot(datareact_time(), aes(x = date))+
         geom_bar(aes(fill = student_g_p)) +
         facet_wrap(~class)
     }
