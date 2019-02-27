@@ -68,6 +68,15 @@ ggplot(p_by_date, aes(x = date)) +
 ```
 
 
+###Model of probability of male/female participation
+
+```{r}
+
+
+
+```
+
+
 ###Contested Call
 
 ```{r}
