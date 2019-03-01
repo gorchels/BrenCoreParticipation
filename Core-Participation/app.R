@@ -33,10 +33,10 @@ ui <- fluidPage(
                         sidebarPanel(
                           dateRangeInput("date_range",
                                          label = "Select Date Range",
-                                         start = "2018-10-02",
-                                         end = "2018-12-06",
-                                         min = "2018-10-02",
-                                         max = "2018-12-06"
+                                         start = "2018-10-01",
+                                         end = "2018-12-07",
+                                         min = "2018-10-01",
+                                         max = "2018-12-07"
                                          ),
                           checkboxGroupInput("Gender", 
                                        label = "Select Student Gender Preference",
@@ -45,7 +45,8 @@ ui <- fluidPage(
                                        )
                         ),
                         #main panel
-                        mainPanel(
+                        mainPanel( 
+                          h2("Student Participation in Core Classes"),
                           plotOutput("time_plot")
                         )
                       )
@@ -61,10 +62,12 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
+  #reaction for time graph widgets
   datareact_time <- reactive({
     participation %>% 
       mutate(date = mdy(date)) %>% 
-      filter(student_g_p == input$Gender)
+      filter(student_g_p == input$Gender) %>% 
+      filter(date >= input$date_range[1], date <= input$date_range)
   })
   
   # time series panel
@@ -72,7 +75,13 @@ server <- function(input, output) {
     {
         ggplot(datareact_time(), aes(x = date))+
         geom_bar(aes(fill = student_g_p)) +
-        facet_wrap(~class)
+        scale_fill_manual(values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
+        facet_wrap(~class) +
+        theme_classic() +
+        scale_y_continuous(expand = c(0,0), limits = c(0,18), breaks = seq(0,20, by = 5)) +
+        scale_x_date(breaks = as.Date(c("2018-10-01", "2018-10-08", "2018-10-15", "2018-10-22", "2018-10-29", "2018-11-05", "2018-11-12", "2018-11-19", "2018-11-26", "2018-12-03"))) +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+        labs(x = "Date", y = "Number of participants") 
     }
   )
   
