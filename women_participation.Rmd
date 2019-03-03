@@ -68,6 +68,23 @@ ggplot(p_by_date, aes(x = date)) +
 ```
 
 
+###Model of probability of male/female participation
+
+```{r}
+#model exploration
+
+
+
+```
+
+
+```{r}
+#model visualization
+
+
+```
+
+
 ###Contested Call
 
 ```{r}
