@@ -59,7 +59,7 @@ ui <- fluidPage(
                       radioButtons("Gender", 
                                    label = "Professor's Gender",
                                    choices = list("Male" = 1, "Female" = 2),
-                                   selected = 0) 
+                                   selected = 0)
              
              )
 )
