@@ -131,6 +131,12 @@ earth_1_prob
 
 ```{r}
 #model visualization
+earth_1_data <- as.data.frame(earth_1_prob)
+prob_vis <- ggplot(earth_1_data) +
+  geom_bar(aes(x = earth_1_prob))
+#prob_vis
+#this is not showing what I want it to show
+
 
 
 ```
