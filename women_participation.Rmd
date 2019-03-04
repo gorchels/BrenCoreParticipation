@@ -99,8 +99,8 @@ time
 #model exploration
 
 #multiple linear regression with all variables
-gender_lm1 <- lm(student_g_p ~ class + time + prof_g_p + q_or_a, data = w_p)
-summary(gender_lm1) 
+#gender_lm1 <- lm(student_g_p ~ class + time + prof_g_p + q_or_a, data = w_p)
+#summary(gender_lm1) 
 #not working maybe need to do a binary logistic regression because the result is not continuous
 
 #binary logistic regression
