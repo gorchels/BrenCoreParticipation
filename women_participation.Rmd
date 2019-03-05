@@ -179,6 +179,6 @@ con_tally = con_df %>%
   group_by(prof_g_p, q_or_a, student_g_p) %>% 
   tally()
 
-mosaic(con_tally, shade=TRUE, legend=TRUE)
+mosaic(table(con_tally), shade=TRUE, legend=TRUE)
 ```
 
