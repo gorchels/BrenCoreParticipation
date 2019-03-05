@@ -55,7 +55,28 @@ ui <- fluidPage(
       
                       ),
              
-             tabPanel("Model"),
+             tabPanel("Model",
+                      #sidebar with input widgets
+                      sidebarLayout(
+                        sidebarPanel(
+                          selectInput("class_model",
+                                      label = "Bren Core Class",
+                                      choices = list("Earth System Science" = "203", 
+                                                     "Data Analysis" = "206", 
+                                                     "Buisness" = "210"),
+                                      selected = "203"), 
+                          radioButtons("prof_gender_model",
+                                       label = "Professor's Gender",
+                                       choices = list("Male" = "m", "Female" = "w"),
+                                       selected = "m")
+                          
+                        ),
+                        #main panel
+                        mainPanel(
+                          h2("Probability of Woman Participation with the given parameters"),
+                          textOutput("selected_model")
+                        )
+                      )),
              
              tabPanel("Contested Call",
                       radioButtons("Gender", 
@@ -93,6 +114,9 @@ server <- function(input, output) {
         labs(x = "Date", y = "Number of participants") 
     }
   )
+  
+  #model panel output
+  output$selected_model <- renderText({})
   
   
 }
