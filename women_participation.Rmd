@@ -69,6 +69,7 @@ ggplot(p_by_date, aes(x = date)) +
   
 test<-p_by_date %>% 
   filter(class == "210") 
+
   
 ggplot(test, aes(x = date)) +
   geom_bar(aes(fill = student_g_p)) +
