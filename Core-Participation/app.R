@@ -65,15 +65,26 @@ ui <- fluidPage(
                                                      "Data Analysis" = "206", 
                                                      "Buisness" = "210"),
                                       selected = "203"), 
+                          checkboxGroupInput("class_time_model",
+                                             label = "Section of Class",
+                                             choices = list("Beginning" = "1",
+                                                            "Middle" = "2",
+                                                            "End" = "3"),
+                                             selected = "1"),
                           radioButtons("prof_gender_model",
                                        label = "Professor's Gender",
                                        choices = list("Male" = "m", "Female" = "w"),
-                                       selected = "m")
+                                       selected = "m"),
+                          radioButtons("q_a_model",
+                                       label = "Type of Participation",
+                                       choices = list("Question" = "q",
+                                                      "Answer" = "a"),
+                                       selected = "q")
                           
                         ),
                         #main panel
                         mainPanel(
-                          h2("Probability of Woman Participation with the given parameters"),
+                          h2("Probability of Woman Participation with the Choosen Parameters"),
                           textOutput("selected_model")
                         )
                       )),
