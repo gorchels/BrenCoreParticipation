@@ -19,7 +19,9 @@ library(effsize)
 library(kableExtra)
 library(lubridate)
 
-w_p = read_csv("women_participation_git_fix.csv")
+w_p = read_csv("women_participation_git_fix.csv") %>% 
+  mutate(class = as.factor(class)) %>% #changing class column to a factor instead of a continuous integer
+  mutate(time = as.ordered(time))
 
 #View(w_p) #calling the data frame 
 ```
@@ -62,8 +64,18 @@ p_by_date <- w_p %>%
 
 ggplot(p_by_date, aes(x = date)) +
   geom_bar(aes(fill = student_g_p)) +
+  scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
   facet_wrap(~class)
   
+test<-p_by_date %>% 
+  filter(class == "210") 
+
+  
+ggplot(test, aes(x = date)) +
+  geom_bar(aes(fill = student_g_p)) +
+  scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
+  scale_x_date(breaks = as.Date(c("2018-10-01", "2018-10-08", "2018-10-15", "2018-10-22", "2018-10-29", "2018-11-05", "2018-11-12", "2018-11-19", "2018-11-26", "2018-12-03"))) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
   
 ```
 
@@ -71,8 +83,57 @@ ggplot(p_by_date, aes(x = date)) +
 ###Model of probability of male/female participation
 
 ```{r}
+#explore data a bit to see if there are relationships
+
+q_a <- ggplot(w_p, aes(x = q_or_a)) +
+  geom_bar(aes(color = student_g_p))
+q_a
+
+class <- ggplot(w_p, aes(x = class)) +
+  geom_bar(aes(color = student_g_p))
+class
+
+prof <- ggplot(w_p, aes(x = prof_g_p)) +
+  geom_bar(aes(color = student_g_p))
+prof
+
+time <- ggplot(w_p, aes(x = time)) +
+  geom_bar(aes(color = student_g_p))
+time
+
+
+```
+
+
+```{r}
 #model exploration
 
+#multiple linear regression with all variables
+#gender_lm1 <- lm(student_g_p ~ class + time + prof_g_p + q_or_a, data = w_p)
+#summary(gender_lm1) 
+#not working maybe need to do a binary logistic regression because the result is not continuous
+
+#binary logistic regression
+
+#converting student_g_p to 1 and 0, w = 1 m = 0
+w_p_binary <-w_p %>% 
+  mutate(student_g_binary = recode(student_g_p, "w" = 1, "m" = 0)) %>% 
+  select(date, class, professor, prof_g_p, q_or_a, student_g_p, time, student_g_binary)
+
+#binary logistic model with all variables
+#MODEL 1
+gender_logmod1 <- glm(student_g_binary ~ class + time + prof_g_p + q_or_a, data = w_p_binary, family = "binomial")
+gender_logmod1
+summary(gender_logmod1)
+
+#exploritory predictions of women precipitation with logistic model 1
+
+#prediction of woman participation if in 203, first part class, woman professor, and question
+earth_1 <- data.frame(class = "203", time = "1", prof_g_p = "w", q_or_a = "q") 
+earth_1_logodds <- predict(gender_logmod1, newdata = earth_1, type = "link") #log odds of women participation
+earth_1_odds <- exp(earth_1_logodds) #odds women participation
+earth_1_prob <- predict(gender_logmod1, newdata = earth_1, type = "response")
+earth_1_prob
 
 
 ```
@@ -80,6 +141,12 @@ ggplot(p_by_date, aes(x = date)) +
 
 ```{r}
 #model visualization
+earth_1_data <- as.data.frame(earth_1_prob)
+prob_vis <- ggplot(earth_1_data) +
+  geom_bar(aes(x = earth_1_prob))
+#prob_vis
+#this is not showing what I want it to show
+
 
 
 ```
