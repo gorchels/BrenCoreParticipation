@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(shinythemes)
 library(tidyverse)
 library(lubridate)
 
@@ -17,6 +18,7 @@ participation <- read_csv("data/women_participation_git_fix.csv")
 # Define UI for application
 ui <- fluidPage(
   
+  theme = shinytheme("flatly"),
   #Application title
   titlePanel("Exploring Bren Core Participation by Gender"),
   
