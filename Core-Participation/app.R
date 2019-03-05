@@ -108,7 +108,7 @@ server <- function(input, output) {
         scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
         facet_wrap(~class) +
         theme_classic() +
-        scale_y_continuous(expand = c(0,0), limits = c(0,55), breaks = seq(0,55, by = 5)) +
+        scale_y_continuous(expand = c(0,0), limits = c(0,35), breaks = seq(0,35, by = 5)) +
         scale_x_date(breaks = as.Date(c("2018-10-01", "2018-10-08", "2018-10-15", "2018-10-22", "2018-10-29", "2018-11-05", "2018-11-12", "2018-11-19", "2018-11-26", "2018-12-03"))) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))+
         labs(x = "Date", y = "Number of participants") 
