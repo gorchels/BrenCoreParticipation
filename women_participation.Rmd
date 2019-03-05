@@ -62,8 +62,17 @@ p_by_date <- w_p %>%
 
 ggplot(p_by_date, aes(x = date)) +
   geom_bar(aes(fill = student_g_p)) +
+  scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
   facet_wrap(~class)
   
+test<-p_by_date %>% 
+  filter(class == "210") 
+  
+ggplot(test, aes(x = date)) +
+  geom_bar(aes(fill = student_g_p)) +
+  scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
+  scale_x_date(breaks = as.Date(c("2018-10-01", "2018-10-08", "2018-10-15", "2018-10-22", "2018-10-29", "2018-11-05", "2018-11-12", "2018-11-19", "2018-11-26", "2018-12-03"))) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
   
 ```
 
