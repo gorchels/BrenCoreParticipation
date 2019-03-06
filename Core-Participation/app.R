@@ -126,8 +126,21 @@ server <- function(input, output) {
     }
   )
   
+  #Model data 
+  data_model <- participation %>% 
+    mutate(student_g_binary = recode(student_g_p, "w" = 1, "m" = 0)) %>% 
+    select(date, class, professor, prof_g_p, q_or_a, student_g_p, time, student_g_binary)
+  
+  #Binary Logistic Model
+  gender_logmod1 <- glm(student_g_binary ~ class + time + prof_g_p + q_or_a, data = data_model, family = "binomial")
+  
+  #reaction for model widgets
+  datareact_model <- reactive({
+    data.frame(class = input$class_model, time = input$class_time_model, prof_g_p = input$prof_gender_model, q_or_a = input$q_a_model) 
+  })
+  
   #model panel output
-  output$selected_model <- renderText({})
+  output$selected_model <- renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
   
 }
