@@ -18,6 +18,7 @@ library(tidyverse)
 library(effsize)
 library(kableExtra)
 library(lubridate)
+library(vcd)
 
 w_p = read_csv("women_participation_git_fix.csv") %>% 
   mutate(class = as.factor(class)) %>% #changing class column to a factor instead of a continuous integer
@@ -167,10 +168,6 @@ ggplot(con_by_date, aes(x = date)) +
   facet_wrap(~class)
 ```
 
-```{r}
-library(vcd)
-mosaic(HairEyeColor, shade=TRUE, legend=TRUE) #Trying to do some visualization like this 
-```
 
 ```{r}
 
@@ -179,6 +176,34 @@ con_tally = con_df %>%
   group_by(prof_g_p, q_or_a, student_g_p) %>% 
   tally()
 
-mosaic(table(con_tally), shade=TRUE, legend=TRUE)
+mosaic(table(con_tally), shade=TRUE, legend=FALSE)
+```
+
+Creating a proportion of how being contested changes probability 
+```{r}
+
+con_w_df = con_df %>% 
+  filter(student_g_p == "w")
+
+con_m_df = con_df %>% 
+  filter(student_g_p == "m")
+
+
+prop_w_con = count(con_w_df)/(count(con_w_df)+count(con_m_df))
+#prop_w
+prop_m_con = count(con_m_df)/(count(con_w_df)+count(con_m_df))
+#prop_m
+prop_m_con
+```
+
+```{r}
+prop_chi <- gc_df %>% 
+  filter(gender != "NA", make_get_guns != "NA") %>% 
+  count(gender, make_get_guns) %>% 
+  spread(make_get_guns, n) %>% # Created a contingency table
+  select(-gender) # removes gender columns
+
+rownames(get_guns) <- c("Female","Male") # naming the rows
+
 ```
 
