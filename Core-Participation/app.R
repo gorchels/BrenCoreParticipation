@@ -73,7 +73,7 @@ ui <- fluidPage(
                                              selected = "1"),
                           radioButtons("prof_gender_model",
                                        label = "Professor's Gender",
-                                       choices = list("Male" = "m", "Female" = "w"),
+                                       choices = list("Male" = "0", "Female" = "1"),
                                        selected = "m"),
                           radioButtons("q_a_model",
                                        label = "Type of Participation",
@@ -136,11 +136,13 @@ server <- function(input, output) {
   
   #reaction for model widgets
   datareact_model <- reactive({
-    data.frame(class = input$class_model, time = input$class_time_model, prof_g_p = input$prof_gender_model, q_or_a = input$q_a_model) 
+    -.1166 + .3345 * (as.numeric(input$prof_gender_model))
+    #data.frame(class = input$class_model, time = input$class_time_model, prof_g_p = input$prof_gender_model, q_or_a = input$q_a_model) 
   })
   
   #model panel output
-  output$selected_model <- renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
+  output$selected_model <- renderText({print(datareact_model())})
+    #renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
   
 }
