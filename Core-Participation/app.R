@@ -90,7 +90,7 @@ ui <- fluidPage(
                       )),
              
              tabPanel("Contested Call",
-                      radioButtons("Gender", 
+                      radioButtons("ContCallGender", 
                                    label = "Professor's Gender",
                                    choices = list("Male" = 1, "Female" = 2),
                                    selected = 0)

@@ -157,7 +157,8 @@ prob_vis <- ggplot(earth_1_data) +
 
 ```{r}
 con_df = w_p %>% 
-  filter(cont_call == 1)
+  filter(cont_call == 1) %>% 
+  mutate(prop_w = number_w_p/(number_w_p+number_m_p))
 
 con_by_date <- con_df %>% 
   mutate(date = mdy(date)) %>% 
@@ -197,13 +198,10 @@ prop_m_con
 ```
 
 ```{r}
-prop_chi <- gc_df %>% 
-  filter(gender != "NA", make_get_guns != "NA") %>% 
-  count(gender, make_get_guns) %>% 
-  spread(make_get_guns, n) %>% # Created a contingency table
-  select(-gender) # removes gender columns
+con_wp = con_df %>% 
+  filter(prof_g_p == "w")
 
-rownames(get_guns) <- c("Female","Male") # naming the rows
-
+con_mp = con_df %>% 
+  filter(prof_g_p == "m")
 ```
 
