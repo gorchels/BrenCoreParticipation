@@ -136,6 +136,10 @@ earth_1_odds <- exp(earth_1_logodds) #odds women participation
 earth_1_prob <- predict(gender_logmod1, newdata = earth_1, type = "response")
 earth_1_prob
 
+#attempt predict probability with out dataframe
+
+
+
 
 ```
 
