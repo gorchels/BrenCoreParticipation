@@ -25,8 +25,8 @@ ui <- fluidPage(
   navbarPage(" ",
              
              tabPanel("Summary",
-                      h1("Title of the app"),
-                      p("Description of the app")
+                      h1("Does 70/30 mean 70/30?"),
+                      p("The MESM class of 2020 is 70% women and 30% men. Does this lead to 70% participation by women and 30% by men? Our app explores how gender affects participation in Bren core classes in the Fall of 2018. We visualize changes in participation by gender as the quarter progresses, estimate the probabilty of women and men participating under different circumstances, and calculate probabilities of different gender identities being called on based on the professor's gender.")
                       ),
              
              tabPanel("Daily Particiaption",

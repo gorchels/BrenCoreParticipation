@@ -188,17 +188,41 @@ Creating a proportion of how being contested changes probability
 ```{r}
 
 con_w_df = con_df %>% 
-  filter(student_g_p == "w")
+  filter(student_g_p == "w") %>% 
+  filter(number_w_p == 1) %>% 
+  filter(number_m_p == 1)
 
 con_m_df = con_df %>% 
-  filter(student_g_p == "m")
+  filter(student_g_p == "m") %>% 
+  filter(number_m_p == 1) %>% 
+  filter(number_w_p == 1)
 
 
 prop_w_con = count(con_w_df)/(count(con_w_df)+count(con_m_df))
 #prop_w
-prop_m_con = count(con_m_df)/(count(con_w_df)+count(con_m_df))
+prop_m_con_overall = count(con_m_df)/(count(con_w_df)+count(con_m_df))
 #prop_m
-prop_m_con
+prop_m_con_overall
+
+
+```
+
+
+```{r}
+con_w_df_prof = con_w_df %>% 
+  filter(prof_g_p == "w") 
+
+
+
+
+con_m_df_prof = con_df %>% 
+  filter(prof_g_p == "m")
+
+prop_w_con_prof_w = count(con_w_df)/(count(con_w_df)+count(con_m_df))
+#prop_w
+prop_m_con_prof_w = count(con_m_df_prof)/(count(con_w_df)+count(con_m_df))
+#prop_m
+prop_m_con_prof_w
 ```
 
 ```{r}
