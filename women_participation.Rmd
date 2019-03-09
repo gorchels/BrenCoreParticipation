@@ -22,7 +22,7 @@ library(vcd)
 
 w_p = read_csv("women_participation_git_fix.csv") %>% 
   mutate(class = as.factor(class)) %>% #changing class column to a factor instead of a continuous integer
-  mutate(time = as.ordered(time))
+  mutate(time = as.factor(time))
 
 #View(w_p) #calling the data frame 
 ```

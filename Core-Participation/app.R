@@ -65,7 +65,7 @@ ui <- fluidPage(
                                                      "Data Analysis" = "206", 
                                                      "Buisness" = "210"),
                                       selected = "203"), 
-                          checkboxGroupInput("class_time_model",
+                          selectInput("class_time_model",
                                              label = "Section of Class",
                                              choices = list("Beginning" = "1",
                                                             "Middle" = "2",
@@ -74,18 +74,18 @@ ui <- fluidPage(
                           radioButtons("prof_gender_model",
                                        label = "Professor's Gender",
                                        choices = list("Male" = "0", "Female" = "1"),
-                                       selected = "m"),
+                                       selected = "0"),
                           radioButtons("q_a_model",
                                        label = "Type of Participation",
-                                       choices = list("Question" = "q",
-                                                      "Answer" = "a"),
-                                       selected = "q")
+                                       choices = list("Question" = "1",
+                                                      "Answer" = "0"),
+                                       selected = "1")
                           
                         ),
                         #main panel
                         mainPanel(
                           h2("Probability of Woman Participation with the Choosen Parameters"),
-                          textOutput("selected_model")
+                          h1(textOutput("selected_model"), align = "center")
                         )
                       )),
              
@@ -129,19 +129,21 @@ server <- function(input, output) {
   #Model data 
   data_model <- participation %>% 
     mutate(student_g_binary = recode(student_g_p, "w" = 1, "m" = 0)) %>% 
-    select(date, class, professor, prof_g_p, q_or_a, student_g_p, time, student_g_binary)
+    select(date, class, professor, prof_g_p, q_or_a, student_g_p, time, student_g_binary) %>% 
+    mutate(class = as.factor(class)) %>% 
+    mutate(time = as.factor(time))
   
   #Binary Logistic Model
   gender_logmod1 <- glm(student_g_binary ~ class + time + prof_g_p + q_or_a, data = data_model, family = "binomial")
   
   #reaction for model widgets
   datareact_model <- reactive({
-    -.1166 + .3345 * (as.numeric(input$prof_gender_model))
+    -0.06133 + (0.3345 * (as.numeric(input$prof_gender_model))) - (0.24419 * (as.numeric(input$q_a_model))) + (0.41634 * (as.numeric(if(input$class_model == "206") {1} else {0}))) + (0.28538 * (as.numeric(if(input$class_model == "210") {1} else {0}))) - (0.34415 * (as.numeric(if(input$class_time_model == "2") {1} else {0}))) + (0.17847 * (as.numeric(if(input$class_time_model == "3") {1} else {0}))) 
     #data.frame(class = input$class_model, time = input$class_time_model, prof_g_p = input$prof_gender_model, q_or_a = input$q_a_model) 
   })
   
-  #model panel output
-  output$selected_model <- renderText({print(datareact_model())})
+  #model panel output, in Probability
+  output$selected_model <- renderText({print(round(((exp(datareact_model()) / (1 + exp(datareact_model())))*100), digits = 2))})
     #renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
   
