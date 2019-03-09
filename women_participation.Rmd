@@ -209,27 +209,37 @@ prop_m_con_overall
 
 
 ```{r}
+
+con_sing_df = con_df %>% 
+  filter(number_m_p == 1) %>% 
+  filter(number_w_p == 1)
+
+con_mprof_df = con_df %>% 
+  filter(number_m_p == 1) %>% 
+  filter(number_w_p == 1) %>% 
+  filter(prof_g_p == "m")
+
+con_wprof_df = con_df %>% 
+  filter(number_m_p == 1) %>% 
+  filter(number_w_p == 1) %>% 
+  filter(prof_g_p == "w")
+
 con_w_df_prof = con_w_df %>% 
   filter(prof_g_p == "w") 
 
-
-
-
-con_m_df_prof = con_df %>% 
+con_m_df_prof = con_w_df %>% 
   filter(prof_g_p == "m")
 
-prop_w_con_prof_w = count(con_w_df)/(count(con_w_df)+count(con_m_df))
+
+prop_w_con_prof_w = count(con_w_df_prof)/(count(con_wprof_df))
 #prop_w
-prop_m_con_prof_w = count(con_m_df_prof)/(count(con_w_df)+count(con_m_df))
+prop_m_con_prof_w = count(con_m_df_prof)/(count(con_mprof_df))
 #prop_m
 prop_m_con_prof_w
+
+prop_w_con_prof_w
+
 ```
 
-```{r}
-con_wp = con_df %>% 
-  filter(prof_g_p == "w")
 
-con_mp = con_df %>% 
-  filter(prof_g_p == "m")
-```
 
