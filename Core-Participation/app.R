@@ -13,6 +13,7 @@ library(tidyverse)
 library(lubridate)
 
 participation <- read_csv("data/women_participation_git_fix.csv") 
+
 con_prop = data.frame(
   prof_g = c("m", "w", "m", "w"), 
   stud_g = c("w", "w", "m", "m"), 
@@ -98,11 +99,13 @@ ui <- fluidPage(
                       radioButtons("ContCallGender", 
                                    label = "Professor's Gender",
                                    choices = list("Man" = "m", "Woman" = "w"),
-                                   selected = 0)),
+                                   selected = "w"),
+                      p("Hello")
+                    )
+                    ,
                       mainPanel( 
                         h2("Proportion Women Called On"),
-                        plotOutput("con_plot")
-                      )
+                        plotOutput("con_plot"))
              
              ))
 )
@@ -155,13 +158,15 @@ server <- function(input, output) {
   output$selected_model <- renderText({print(round(((exp(datareact_model()) / (1 + exp(datareact_model())))*100), digits = 2))})
     #renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
-  reactive({con_prop %>% 
-      filter(stud_g == input$ConCallGender[1])})
-      output$con_plot = renderPlot(
-        {
-         ggplot(con_prop, aes(x="", y=pie, fill=stud_g))+
-          geom_bar(width = 1, stat = "identity")+
-          coord_polar("y", start=0)})
+  con_react = reactive({con_prop %>% 
+      filter(prof_g == input$ContCallGender)})
+  
+  output$con_plot = renderPlot(
+    {ggplot(con_react(), aes(x="", y=pie, fill=stud_g))+
+        geom_bar(width = 1, stat = "identity")+
+        coord_polar("y", start=0)+
+        theme_classic()+
+        scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Man", "Woman"))})
       
 }
 
