@@ -42,7 +42,7 @@ ui <- fluidPage(
                                          ),
                           checkboxGroupInput("Gender_time", 
                                        label = "Select Student Gender Preference",
-                                       choices = list("Male" = "m", "Female" = "w"),
+                                       choices = list("Man" = "m", "Woman" = "w"),
                                        selected = "m"
                                        )
                         ),
@@ -73,7 +73,7 @@ ui <- fluidPage(
                                              selected = "1"),
                           radioButtons("prof_gender_model",
                                        label = "Professor's Gender",
-                                       choices = list("Male" = "0", "Female" = "1"),
+                                       choices = list("Man" = "0", "Woman" = "1"),
                                        selected = "0"),
                           radioButtons("q_a_model",
                                        label = "Type of Participation",
@@ -90,12 +90,18 @@ ui <- fluidPage(
                       )),
              
              tabPanel("Contested Call",
+                      sidebarLayout(
+                        sidebarPanel(
                       radioButtons("ContCallGender", 
                                    label = "Professor's Gender",
-                                   choices = list("Male" = 1, "Female" = 2),
-                                   selected = 0)
+                                   choices = list("Man" = "m", "Woman" = "w"),
+                                   selected = 0)),
+                      mainPanel( 
+                        h2("Proportion Women Called On"),
+                        plotOutput("con_plot")
+                      )
              
-             )
+             ))
 )
 )
    
@@ -146,7 +152,18 @@ server <- function(input, output) {
   output$selected_model <- renderText({print(round(((exp(datareact_model()) / (1 + exp(datareact_model())))*100), digits = 2))})
     #renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
-  
+  datareact_con = data.frame(
+    prof_g = c("m", "w", "m", "w"), 
+    stud_g = c("w", "w", "m", "m"), 
+    pie = c(53, 41, 47, 59)) 
+  reactive({datareact_con_output = datareact_con %>% 
+      filter(stud_g == input$ConCallGender[1]| stud_g == input$ConCallGender[2])}
+      output$con_plot = renderPlot(
+        {
+          ggplot(datareact_con_output(), aes(x="", y=pie, fill=stud_g))+
+          geom_bar(width = 1, stat = "identity")+
+          coord_polar("y", start=0)
+      }))
 }
 
 # Run the application 

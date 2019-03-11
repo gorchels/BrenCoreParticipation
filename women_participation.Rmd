@@ -237,8 +237,19 @@ prop_m_con_prof_w = count(con_m_df_prof)/(count(con_mprof_df))
 #prop_m
 prop_m_con_prof_w
 
+
 prop_w_con_prof_w
 
+con_call_pie = data.frame(
+  prof_g = c("m", "w", "m", "w"), 
+  stud_g = c("w", "w", "m", "m"), 
+  pie = c(53, 41, 47, 59))
+
+ggplot(con_call_pie, aes(x="", y=pie, fill=stud_g))+
+  geom_bar(width = 1, stat = "identity")+
+  coord_polar("y", start=0)
+
+  
 ```
 
 
