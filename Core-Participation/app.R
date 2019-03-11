@@ -160,9 +160,11 @@ server <- function(input, output) {
   output$selected_model <- renderText({print(round(((exp(datareact_model()) / (1 + exp(datareact_model())))*100), digits = 2))})
     #renderText({predict(gender_logmod1, newdata = datareact_model, type = "response")})
   
+  #contested call reactive widget
   con_react = reactive({con_prop %>% 
       filter(prof_g == input$ContCallGender)})
   
+  #constested call output
   output$con_plot = renderPlot(
     {ggplot(con_react(), aes(x="", y=pie, fill=stud_g))+
         geom_bar(width = 1, stat = "identity")+
