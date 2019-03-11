@@ -35,7 +35,7 @@ ui <- fluidPage(
                       p("The data used for this app is observational count data on the participation of the 2020 cohort of Bren students during the fall core classes Earth System Science, Data Analysis, and Business. Each class Madeline Gorchels (a class of 2020 Bren student) tallied the gender of participants, the section of class the participation occurred, and if a contested call occurred. The dataset included about 600 observation entries.")
                       ),
              
-             tabPanel("Daily Particiaption",
+             tabPanel("Daily Participation",
                       #sidebar with input widgets
                       sidebarLayout(
                         sidebarPanel(
@@ -69,10 +69,10 @@ ui <- fluidPage(
                                       label = "Bren Core Class",
                                       choices = list("Earth System Science" = "203", 
                                                      "Data Analysis" = "206", 
-                                                     "Buisness" = "210"),
+                                                     "Business" = "210"),
                                       selected = "203"), 
                           selectInput("class_time_model",
-                                             label = "Section of Class",
+                                             label = "Section of Class Time",
                                              choices = list("Beginning" = "1",
                                                             "Middle" = "2",
                                                             "End" = "3"),
