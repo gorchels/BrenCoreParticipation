@@ -95,12 +95,12 @@ ui <- fluidPage(
              
              tabPanel("Contested Call",
                       sidebarLayout(
-                        sidebarPanel(
+                        sidebarPanel(p("A contested call occurs when one man and one woman raises their hand. The proportion shows the number of times a student was selected by gender."),
                       radioButtons("ContCallGender", 
                                    label = "Professor's Gender",
                                    choices = list("Man" = "m", "Woman" = "w"),
-                                   selected = "w"),
-                      p("Hello")
+                                   selected = "w")
+                      
                     )
                     ,
                       mainPanel( 
