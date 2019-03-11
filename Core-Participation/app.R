@@ -130,7 +130,7 @@ server <- function(input, output) {
     {
         ggplot(datareact_time(), aes(x = date))+
         geom_bar(aes(fill = student_g_p)) +
-        scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Male", "Female")) +
+        scale_fill_manual(limits = c("m", "w"), values = c("paleturquoise3", "darkgreen"), name = "Student Gender Preference", labels = c("Male", "Female")) +
         facet_wrap(~class) +
         theme_classic() +
         scale_y_continuous(expand = c(0,0), limits = c(0,35), breaks = seq(0,35, by = 5)) +
@@ -168,7 +168,10 @@ server <- function(input, output) {
         geom_bar(width = 1, stat = "identity")+
         coord_polar("y", start=0)+
         theme_classic()+
-        scale_fill_manual(limits = c("m", "w"), values = c("skyblue1", "palevioletred1"), name = "Student Gender Preference", labels = c("Man", "Woman"))})
+        theme(axis.line = element_blank(),
+              axis.text = element_blank())+
+        labs(x =NULL, y = NULL)+
+        scale_fill_manual(limits = c("m", "w"), values = c("paleturquoise3", "darkgreen"), name = "Student Gender Preference", labels = c("Man", "Woman"))})
       
 }
 
