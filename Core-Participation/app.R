@@ -126,6 +126,11 @@ server <- function(input, output) {
   datareact_time <- reactive({
     participation %>% 
       mutate(date = mdy(date)) %>% 
+      mutate(class = case_when(
+        class == 203 ~ "Earth Systems Science",
+        class == 206 ~ "Data Analysis",
+        class == 210 ~ "Business"
+      )) %>% 
       select(date, student_g_p, class) %>% 
       filter(date >= input$date_range[1], date <= input$date_range[2]) %>% 
       filter(student_g_p == input$Gender_time[1]| student_g_p == input$Gender_time[2])
