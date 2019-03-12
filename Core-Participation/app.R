@@ -71,7 +71,7 @@ ui <- fluidPage(
              tabPanel("Model",
                       #sidebar with input widgets
                       sidebarLayout(
-                        sidebarPanel(
+                        sidebarPanel(p("The model was calculated by conducting a binary logistic regression with the dependent variable of woman participation and the independent parameters listed below. The probability displayed is calculated using that model and the parameters choosen."),
                           selectInput("class_model",
                                       label = "Bren Core Class",
                                       choices = list("Earth System Science" = "203", 
