@@ -5,7 +5,7 @@
 # Find out more about building applications with Shiny here:
 #
 #    http://shiny.rstudio.com/
-#
+#hi
 
 library(shiny)
 library(shinythemes)
@@ -127,6 +127,11 @@ server <- function(input, output) {
   datareact_time <- reactive({
     participation %>% 
       mutate(date = mdy(date)) %>% 
+      mutate(class = case_when(
+        class == 203 ~ "Earth Systems Science",
+        class == 206 ~ "Data Analysis",
+        class == 210 ~ "Business"
+      )) %>% 
       select(date, student_g_p, class) %>% 
       filter(date >= input$date_range[1], date <= input$date_range[2]) %>% 
       filter(student_g_p == input$Gender_time[1]| student_g_p == input$Gender_time[2])
@@ -137,7 +142,7 @@ server <- function(input, output) {
     {
         ggplot(datareact_time(), aes(x = date))+
         geom_bar(aes(fill = student_g_p)) +
-        scale_fill_manual(limits = c("m", "w"), values = c("paleturquoise3", "darkgreen"), name = "Student Gender Preference", labels = c("Male", "Female")) +
+        scale_fill_manual(limits = c("m", "w"), values = c("royalblue4", "darkolivegreen4"), name = "Student Gender Preference", labels = c("Man", "Woman")) +
         facet_wrap(~class) +
         theme_classic() +
         scale_y_continuous(expand = c(0,0), limits = c(0,35), breaks = seq(0,35, by = 5)) +
@@ -180,7 +185,7 @@ server <- function(input, output) {
         theme(axis.line = element_blank(),
               axis.text = element_blank())+
         labs(x =NULL, y = NULL)+
-        scale_fill_manual(limits = c("m", "w"), values = c("paleturquoise3", "darkgreen"), name = "Student Gender Preference", labels = c("Man", "Woman"))})
+        scale_fill_manual(limits = c("m", "w"), values = c("royalblue4", "darkolivegreen4"), name = "Student Gender Preference", labels = c("Man", "Woman"))})
       
 }
 
