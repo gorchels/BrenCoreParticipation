@@ -19,6 +19,7 @@ con_prop = data.frame(
   prof_g = c("m", "w", "m", "w"), 
   stud_g = c("w", "w", "m", "m"), 
   pie = c(53, 41, 47, 59))
+
 bren = readPNG("data/brenlogo.png")
 
 # Define UI for application
