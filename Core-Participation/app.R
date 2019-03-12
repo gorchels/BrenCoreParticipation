@@ -12,6 +12,7 @@ library(shinythemes)
 library(tidyverse)
 library(lubridate)
 library(png)
+library(shinydashboard)
 
 participation <- read_csv("data/women_participation_git_fix.csv") 
 
@@ -20,7 +21,6 @@ con_prop = data.frame(
   stud_g = c("w", "w", "m", "m"), 
   pie = c(53, 41, 47, 59))
 
-bren = readPNG("data/brenlogo.png")
 
 # Define UI for application
 ui <- fluidPage(
@@ -37,8 +37,9 @@ ui <- fluidPage(
                       h2("The Data"),
                       p("The data used for this app is observational count data on the participation of the 2020 cohort of Bren students during the fall core classes Earth System Science, Data Analysis, and Business. Each class Madeline Gorchels (a class of 2020 Bren student) tallied the gender of participants, the section of class the participation occurred, and if a contested call occurred. The dataset included about 600 observation entries."),
                       mainPanel(
-                        img(src= bren, align = "left")
+                        img(src= "brenlogo.png", align = "left")
                       )
+                      
              ),
              
              tabPanel("Daily Participation",
